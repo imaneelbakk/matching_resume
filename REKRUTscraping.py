@@ -57,11 +57,11 @@ for link in links:
     except:
         exp='none'
     try:
-        requirement=soup.find_all('div',{"class":"col-md-12 blc"})[3].text.replace("\n", "").replace("\xa0","").replace("\t", "").strip()
+        requirement=soup.find_all('div',{"class":"col-md-12 blc"})[3].text.replace("\n", "").replace("\xa0","").replace("\t", "").replace("Profil recherché :", "").strip()
     except:
         requirement='none'
     try:
-        company=soup.find('h4').text.replace("Les dernières offres d’emploi de « ", "").replace(" »", "")
+        company=soup.find('h4').text.replace("Les dernières offres d’emploi de « ", "").replace(" »", "").replace("?","")
     except:
         company='none'
     df = df.append({"Title":title, "Company":company,"Location":location,"Study":level,"Experience":exp,"Requirement":requirement,"Contract":contract},ignore_index=True)
