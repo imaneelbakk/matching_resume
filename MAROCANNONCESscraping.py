@@ -18,6 +18,7 @@ import pandas as pd
 
 
 
+
 links=[]
 title = []
 Company=[]
@@ -25,8 +26,12 @@ Location=[]
 level=[]
 domaine = []
 contract=[]
-requirements=[]
-df = pd.DataFrame(columns=["Title", "Company","Location","Studies-level","Domain","Contract"])
+Requirements=[]
+Experience=[]
+url=[]
+
+
+df = pd.DataFrame(columns=["Title", "Company","Location","Experience","Studies-level","Domain","Requirements","Contract","Links"])
 
 for i in range(0,20):
     #driver.get('https://ma.indeed.com/jobs?q=stage%20informatique&l=Maroc&start=' + str(i))
@@ -39,6 +44,7 @@ for i in range(0,20):
         links.append(job_titles[j].find("a").attrs["href"])
 
 for link in links:
+    url='https://www.marocannonces.com/'+link
 
 
     result = requests.get('https://www.marocannonces.com/'+link)
@@ -78,15 +84,22 @@ for link in links:
     except:
 
         domaine = 'none'
-    # try:
-    #
-    #     requirements = soup.find('div', class_="block").find_all('br').text.strip()
-    # except:
-    #
-    #     requirements = 'none'
-    # print(requirements)
-
-    df = df.append({"Title": title, "Company": Company, "Location": Location, "Studies-level": level, "Domain": domaine, "Contract": contract}, ignore_index=True)
 
 
-df.to_csv("./csvFiles/marocannonces.csv", index=False)
+    try:
+
+        Requirements = soup.find('div',class_="description desccatemploi").find('div',class_="block").text.strip()
+    except:
+
+        Requirements = 'none'
+    try:
+
+        Experience = "NA"
+    except:
+
+        Experience = 'NA'
+
+    df = df.append({"Title": title, "Company": Company, "Location": Location, "Experience":Experience,"Studies-level": level, "Domain": domaine,"Requirements":Requirements, "Contract": contract,"Links": url}, ignore_index=True)
+
+
+# df.to_csv("./csvFiles/marocannonces.csv", index=False)
