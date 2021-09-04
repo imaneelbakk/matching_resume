@@ -21,7 +21,7 @@ links=[]
 # experiences=[]
 # requirements=[]
 # companies=[]
-df = pd.DataFrame(columns=["Title", "Company","Location","Study","Experience","Requirement","Contract"])
+df = pd.DataFrame(columns=["Title", "Company","Location","Experience","Studies-level","Domain","Requirements","Contract","Links"])
 for i in range(1, 11):
     int=str(i)
     data=requests.get("https://www.rekrute.com/offres.html?s=3&p="+int+"&o=1&sectorId%5B0%5D=24")
@@ -64,7 +64,7 @@ for link in links:
         company=soup.find('h4').text.replace("Les dernières offres d’emploi de « ", "").replace(" »", "").replace("?","")
     except:
         company='none'
-    df = df.append({"Title":title, "Company":company,"Location":location,"Study":level,"Experience":exp,"Requirement":requirement,"Contract":contract},ignore_index=True)
+    df = df.append({"Title":title, "Company":company,"Location":location,"Experience":exp,"Studies-level":level,"Domain":"Informatique","Requirements":requirement,"Contract":contract,"Links":'https://www.rekrute.com'+link},ignore_index=True)
     print('+job')
 
     # experiences.append(exp)
@@ -83,4 +83,5 @@ for link in links:
 #     wr.writerow(["Job Title","company"])
     # wr.writerows(export)
 print(len(df))
-df.to_csv("./csvFiles/rekrut.csv", index=False)
+
+# df.to_csv("./csvFiles/rekrut.csv", index=False)
