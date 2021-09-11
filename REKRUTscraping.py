@@ -82,6 +82,7 @@ for link in links:
 #     wr =csv.writer(rekrut)
 #     wr.writerow(["Job Title","company"])
     # wr.writerows(export)
-print(len(df))
 
 # df.to_csv("./csvFiles/rekrut.csv", index=False)
+
+print(len(df))

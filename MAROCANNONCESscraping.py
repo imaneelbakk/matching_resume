@@ -42,6 +42,7 @@ for i in range(0,20):
 
     for j in range(len(job_titles)) :
         links.append(job_titles[j].find("a").attrs["href"])
+        print('+link')
 
 for link in links:
     url='https://www.marocannonces.com/'+link
@@ -98,8 +99,8 @@ for link in links:
     except:
 
         Experience = 'NA'
-
+    
     df = df.append({"Title": title, "Company": Company, "Location": Location, "Experience":Experience,"Studies-level": level, "Domain": domaine,"Requirements":Requirements, "Contract": contract,"Links": url}, ignore_index=True)
-
-
+    print('+job')
+print(len(df))
 # df.to_csv("./csvFiles/marocannonces.csv", index=False)
