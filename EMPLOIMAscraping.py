@@ -23,36 +23,36 @@ for link in links:
     try:
         title=soup.find("h1",{"class":"title"}).text
     except:
-        title='none'
+        title='null'
     try:
         contract=soup.find("div",{"class":"field field-name-field-offre-contrat-type field-type-taxonomy-term-reference field-label-hidden"}).text.strip()
     except:
-        contract='none'
+        contract='null'
     try:
         location=soup.find("td",{"style":"margin-left: 5px;"}).text
     except:
-        location='none'
+        location='null'
     try:
         level=soup.find('table',{"class":"job-ad-criteria"}).find_all('tr')[6].find('div',{"class":"field-item even"}).text.strip()
     except:
-        level='none'
+        level='null'
     try:
         exp=soup.find('div',{"class":"field field-name-field-offre-niveau-experience field-type-taxonomy-term-reference field-label-hidden"}).text.strip().replace("Expérience entre ", "").replace("Débutant ","")
     except:
-        exp='none'
+        exp='null'
     # try:
     #     requirement=soup.find('ul').find_all('li')[5].text.strip()
     # except:
-    #     requirement='none'
+    #     requirement='null'
     # print(requirement)
     try:
         company=soup.find('div',{"class":"company-title"}).text
     except:
-        company='none'
+        company='null'
     try:
         domain=soup.find('div',{"class":"field field-name-field-offre-secteur field-type-taxonomy-term-reference field-label-hidden"}).text
     except:
-        domain='none'
+        domain='null'
     df = df.append({"Title":title, "Company":company,"Location":location,"Experience":exp,"Studies-level":level,"Domain":domain,"Requirements":'none',"Contract":contract,"Links":'https://www.emploi.ma/'+link},ignore_index=True)
     print('+job')
 

@@ -1,11 +1,26 @@
+import pyspark.sql.types
+from pyspark.sql.types import *
 from pyspark.sql import SparkSession
 from pyspark.sql import SQLContext
-if __name__ == '__main__':
-    scSpark = SparkSession \
-        .builder \
-        .appName("reading csv") \
-        .getOrCreate()
-data_file = './csvFiles/data_collection.csv'
-sdfData = scSpark.read.csv(data_file, header=True, sep=",").cache()
-print('Total Records = {}'.format(sdfData.count()))
-sdfData.show()
+from pyspark.sql.functions import lower, col,upper
+import pandas as pd
+
+spark = SparkSession
+
+# Immutability Example
+# Load the CSV file
+spark = SparkSession.builder.master("local").appName("data_collection").getOrCreate()
+
+df = spark\
+    .read\
+    .format("csv")\
+    .options(header = 'true', inferSchema = 'true')\
+    .option('multiLine', True) \
+    .load("./csvFiles/data_collection.csv")
+
+print(f'Record count is: {df.count()}')
+df.show()
+df = df.dropna(how="any")
+print(f'Record count is: {df.count()}')
+df.show()
+

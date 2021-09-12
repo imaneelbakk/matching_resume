@@ -39,31 +39,31 @@ for link in links:
     try:
         title=soup.find("h1").text
     except:
-        title='none'
+        title='null'
     try:
         contract=soup.find("span",{"class":"tagContrat","title":"Poste avec Management"}).text.strip()
     except:
-        contract='none'
+        contract='null'
     try:
         location=soup.find("span",{"id":"address"}).text
     except:
-        location='none'
+        location='null'
     try:
         level=soup.find('ul',{"class":"featureInfo"}).find_all('li')[2].text.strip()
     except:
-        level='none'
+        level='null'
     try:
         exp=soup.find('ul',{"class":"featureInfo"}).find_all('li')[0].text
     except:
-        exp='none'
+        exp='null'
     try:
         requirement=soup.find_all('div',{"class":"col-md-12 blc"})[3].text.replace("\n", "").replace("\xa0","").replace("\t", "").replace("Profil recherché :", "").strip()
     except:
-        requirement='none'
+        requirement='null'
     try:
         company=soup.find('h4').text.replace("Les dernières offres d’emploi de « ", "").replace(" »", "").replace("?","")
     except:
-        company='none'
+        company='null'
     df = df.append({"Title":title, "Company":company,"Location":location,"Experience":exp,"Studies-level":level,"Domain":"Informatique","Requirements":requirement,"Contract":contract,"Links":'https://www.rekrute.com'+link},ignore_index=True)
     print('+job')
 

@@ -54,37 +54,37 @@ for link in links:
     try:
         title = soup.find("h1").text
     except:
-        title="none"
+        title="null"
     try:
 
         Company = soup.find('ul',class_="extraQuestionName").find_all('li')[3].find_all('a')[0].text.strip()
     except:
 
-        Company = 'none'
+        Company = 'null'
     try:
 
         contract = soup.find('ul', class_="extraQuestionName").find_all('li')[2].find_all('a')[0].text.strip()
     except:
 
-        contract = 'none'
+        contract = 'null'
     try:
 
         Location = soup.find('ul', class_="info-holder").find_all('li')[0].find_all('a')[0].text.strip()
     except:
 
-        Location = 'none'
+        Location = 'null'
     try:
 
         level = soup.find('ul', class_="extraQuestionName").find_all('li')[5].find_all('a')[0].text.strip()
     except:
 
-        level = 'none'
+        level = 'null'
     try:
 
         domaine = soup.find('ul', class_="extraQuestionName").find_all('li')[1].find_all('a')[0].text.strip()
     except:
 
-        domaine = 'none'
+        domaine = 'null'
 
 
     try:
@@ -92,7 +92,7 @@ for link in links:
         Requirements = soup.find('div',class_="description desccatemploi").find('div',class_="block").text.strip()
     except:
 
-        Requirements = 'none'
+        Requirements = 'null'
     try:
 
         Experience = "NA"
