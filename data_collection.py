@@ -4,8 +4,6 @@ import EMPLOIMAscraping as em
 
 import pandas as pd
 
-
-
 df1 =ma.df
 df2=rs.df
 df3=em.df

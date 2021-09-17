@@ -12,6 +12,7 @@ import pandas as pd
 # path="C:\webdrivers\chromedriver.exe"
 # driver=webdriver.Chrome(path)
 links=[]
+dates=[]
 # # titles=[]
 # # locations=[]=[]
 # titles=[]
@@ -21,17 +22,21 @@ links=[]
 # experiences=[]
 # requirements=[]
 # companies=[]
-df = pd.DataFrame(columns=["Title", "Company","Location","Experience","Studies-level","Domain","Requirements","Contract","Links"])
+df = pd.DataFrame(columns=["Title", "Company","Location","Experience","Studies-level","Domain","Requirements","Contract","Links","Date"])
 for i in range(1, 11):
     int=str(i)
     data=requests.get("https://www.rekrute.com/offres.html?s=3&p="+int+"&o=1&sectorId%5B0%5D=24")
     #create a soup object
     soup=BeautifulSoup(data.content,"lxml")
     #print(soup) #to visualize all the dom of the website
+    D=soup.find_all("em",{"class":"date"})
     job_titles=soup.find_all("h2",{"style":"width:90%"})
     for j in range(len(job_titles)):
         links.append(job_titles[j].find("a").attrs["href"])
         print('+link')
+    for k in range(len(D)):
+        dates.append(D[k].find_all("span")[0].text)
+compteur_dates=0
 for link in links:
     result=requests.get('https://www.rekrute.com'+link)
     src=result.content
@@ -64,7 +69,13 @@ for link in links:
         company=soup.find('h4').text.replace("Les dernières offres d’emploi de « ", "").replace(" »", "").replace("?","")
     except:
         company='null'
-    df = df.append({"Title":title, "Company":company,"Location":location,"Experience":exp,"Studies-level":level,"Domain":"Informatique","Requirements":requirement,"Contract":contract,"Links":'https://www.rekrute.com'+link},ignore_index=True)
+    try:
+        date=dates[compteur_dates]
+        compteur_dates+=1
+    except:
+        date='null'
+        compteur_dates+=1
+    df = df.append({"Title":title, "Company":company,"Location":location,"Experience":exp,"Studies-level":level,"Domain":"Informatique","Requirements":requirement,"Contract":contract,"Links":'https://www.rekrute.com'+link,"Date":date},ignore_index=True)
     print('+job')
 
     # experiences.append(exp)

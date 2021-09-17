@@ -19,7 +19,6 @@ df = spark\
     .load("./csvFiles/data_collection.csv")
 
 print(f'Record count is: {df.count()}')
-df.show()
 df = df.dropna(how="any")
 print(f'Record count is: {df.count()}')
 df.show()

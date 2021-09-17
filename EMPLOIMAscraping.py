@@ -5,9 +5,11 @@ from itertools import zip_longest
 from selenium import webdriver
 import time
 import pandas as pd
+from lxml import html
 links=[]
-df = pd.DataFrame(columns=["Title", "Company","Location","Experience","Studies-level","Domain","Requirements","Contract","Links"])
-for i in range(0, 5):
+dates=[]
+df = pd.DataFrame(columns=["Title", "Company","Location","Experience","Studies-level","Domain","Requirements","Contract","Links","Date"])
+for i in range(0, 6):
     int=str(i)
     data=requests.get("https://www.emploi.ma/recherche-jobs-maroc/informatique?f%5B0%5D=im_field_offre_metiers%3A31&page="+int)
     soup=BeautifulSoup(data.content,"lxml")
@@ -15,7 +17,12 @@ for i in range(0, 5):
     for j in range(len(job_titles)):
         links.append(job_titles[j].find("a").attrs["href"])
         print('+link')
-
+    D=soup.find_all('p',{"class":"job-recruiter"})
+    for k in range(len(D)):
+        datePure=D[k].text
+        datePure=datePure.split('|', 1)[0].strip()
+        dates.append(datePure)
+date_compteur=0
 for link in links:
     result=requests.get('https://www.emploi.ma/'+link)
     src=result.content
@@ -40,11 +47,11 @@ for link in links:
         exp=soup.find('div',{"class":"field field-name-field-offre-niveau-experience field-type-taxonomy-term-reference field-label-hidden"}).text.strip().replace("Expérience entre ", "").replace("Débutant ","")
     except:
         exp='null'
-    # try:
-    #     requirement=soup.find('ul').find_all('li')[5].text.strip()
-    # except:
-    #     requirement='null'
-    # print(requirement)
+    try:
+        requirement=soup.find('div',{"class":"content clearfix"}).find_all('ul')[0].text
+    except:
+        requirement=soup.find('div',{"class":"content clearfix"}).find_all('div')[2].text
+    print(requirement)
     try:
         company=soup.find('div',{"class":"company-title"}).text
     except:
@@ -53,7 +60,13 @@ for link in links:
         domain=soup.find('div',{"class":"field field-name-field-offre-secteur field-type-taxonomy-term-reference field-label-hidden"}).text
     except:
         domain='null'
-    df = df.append({"Title":title, "Company":company,"Location":location,"Experience":exp,"Studies-level":level,"Domain":domain,"Requirements":'none',"Contract":contract,"Links":'https://www.emploi.ma/'+link},ignore_index=True)
+    try:
+        date=dates[date_compteur]
+        date_compteur+=1
+    except:
+        date='null'
+        date_compteur+=1
+    df = df.append({"Title":title, "Company":company,"Location":location,"Experience":exp,"Studies-level":level,"Domain":domain,"Requirements":requirement,"Contract":contract,"Links":'https://www.emploi.ma'+link,"Date":date},ignore_index=True)
     print('+job')
-
+# df.to_csv("./csvFiles/emploima.csv", index=False)
 print(len(df))
