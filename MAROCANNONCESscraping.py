@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import requests
 import csv
 from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
+import re
 
 
 from selenium.webdriver.common.keys import Keys
@@ -31,7 +32,7 @@ Experience=[]
 url=[]
 
 
-df = pd.DataFrame(columns=["Title", "Company","Location","Experience","Studies-level","Domain","Requirements","Contract","Links"])
+df = pd.DataFrame(columns=["Title", "Company","Location","Experience","Studies-level","Domain","Requirements","Contract","Links","Date"])
 
 for i in range(0,20):
     #driver.get('https://ma.indeed.com/jobs?q=stage%20informatique&l=Maroc&start=' + str(i))
@@ -99,8 +100,12 @@ for link in links:
     except:
 
         Experience = 'NA'
-    
-    df = df.append({"Title": title, "Company": Company, "Location": Location, "Experience":Experience,"Studies-level": level, "Domain": domaine,"Requirements":Requirements, "Contract": contract,"Links": url}, ignore_index=True)
+    try:
+        date=soup.find('title').text
+        date=re.sub(r'.*- ', ' ', date).replace(']',"").strip()
+    except:
+        date='null'
+    df = df.append({"Title": title, "Company": Company, "Location": Location, "Experience":Experience,"Studies-level": level, "Domain": domaine,"Requirements":Requirements, "Contract": contract,"Links": url,"Date":date}, ignore_index=True)
     print('+job')
 print(len(df))
-# df.to_csv("./csvFiles/marocannonces.csv", index=False)
+df.to_csv("./csvFiles/marocannonces.csv", index=False)

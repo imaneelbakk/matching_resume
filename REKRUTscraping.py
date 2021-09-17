@@ -94,6 +94,6 @@ for link in links:
 #     wr.writerow(["Job Title","company"])
     # wr.writerows(export)
 
-# df.to_csv("./csvFiles/rekrut.csv", index=False)
+df.to_csv("./csvFiles/rekrut.csv", index=False)
 
 print(len(df))
