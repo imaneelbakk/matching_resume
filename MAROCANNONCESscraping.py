@@ -96,10 +96,10 @@ for link in links:
         Requirements = 'null'
     try:
 
-        Experience = "NA"
+        Experience = "null"
     except:
 
-        Experience = 'NA'
+        Experience = 'null'
     try:
         date=soup.find('title').text
         date=re.sub(r'.*- ', ' ', date).replace(']',"").strip()
