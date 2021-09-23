@@ -108,4 +108,4 @@ for link in links:
     df = df.append({"Title": title, "Company": Company, "Location": Location, "Experience":Experience,"Studies-level": level, "Domain": domaine,"Requirements":Requirements, "Contract": contract,"Links": url,"Date":date}, ignore_index=True)
     print('+job')
 print(len(df))
-df.to_csv("./csvFiles/marocannonces.csv", index=False)
+# df.to_csv("./csvFiles/marocannonces.csv", index=False)
